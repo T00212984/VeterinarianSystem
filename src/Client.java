@@ -1,15 +1,12 @@
-public class Staff {
+public class Client {
     private String name;
     private String address;
-    private String title;
     private String phone;
 
-    public Staff(String name, String address, String title, String phone) {
+    public Client(String name, String address, String phone) {
         this.name = name;
         this.address = address;
-        this.title = title;
         this.phone = phone;
-
     }
 
     public String getName() {
@@ -36,16 +33,9 @@ public class Staff {
         this.phone = phone;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     @Override
     public String toString() {
-        return String.format("Name: %s\nAddress: %s\nTitle %s\nPhone: ", this.getName(), this.getAddress() ,this.getTitle(), this.getPhone());
+        return String.format("Name: %s\nAddress: %s\nPhone: ", this.getName(), this.getAddress() , this.getPhone());
+
     }
 }

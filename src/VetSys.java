@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class VetSys extends JFrame implements ActionListener{
@@ -10,12 +12,14 @@ public class VetSys extends JFrame implements ActionListener{
         JMenu StaffMenu;
         JMenu ClientsMenu;
         JMenu PetsMenu;
-        JLabel response;
         JButton staffButton;
 
 
-        ArrayList<Staff> staff2 = new ArrayList();
+        ArrayList<Staff> staffList = new ArrayList();
         private Staff staff;
+
+        ArrayList<Client> clientList = new ArrayList();
+        private Client client;
 
 
         public VetSys() {
@@ -85,17 +89,17 @@ public class VetSys extends JFrame implements ActionListener{
                 }
 
             }else if(e.getActionCommand().equals("Add Client")){
-                System.out.print("4");
+                this.addClient();
             }else if(e.getActionCommand().equals("View Clients")) {
-                System.out.print("5");
+                this.viewClient();
             }else if (e.getActionCommand().equals("Delete Clients")){
-                System.out.print("6");
+                this.deleteClient();
             }else if(e.getActionCommand().equals("Add Pet")){
-                System.out.print("7");
+               // this.addPet();
             }else if(e.getActionCommand().equals("View Pets")){
-                System.out.print("8");
+                //this.viewPet();
             }else if(e.getActionCommand().equals("Delete Pets")) {
-                System.out.print("9");
+                //this.deletePet();
             }
     }
 
@@ -180,17 +184,20 @@ public class VetSys extends JFrame implements ActionListener{
                     String position = (String)JOptionPane.showInputDialog((Component)null, "Choose Staff's Position", "Position", 3, (Icon)null, title, title[0]);
 
                     int j=0;
+                    String phone = JOptionPane.showInputDialog("Enter the Staff's phone number");
+
                     while(j!=1){
-                       String phone = JOptionPane.showInputDialog("Enter the Staff's phone number");
                        try {
                         Integer.parseInt(phone);
                         j=1;
                         valid = false;
                         this.staff = new Staff(name, address,position, phone);
                         JOptionPane.showMessageDialog(null,"Staff created successfully", "Added", JOptionPane.INFORMATION_MESSAGE);
-                    }catch(NumberFormatException e){
+                       }catch(NumberFormatException e){
                         JOptionPane.showMessageDialog(null,"Phone number is invalid", "ERROR",JOptionPane.ERROR_MESSAGE);
-                    }
+                        phone = JOptionPane.showInputDialog("Enter the Staff's phone number");
+
+                       }
                    }
                 }else{
                     JOptionPane.showMessageDialog(null,"Address is invalid", "ERROR",JOptionPane.ERROR_MESSAGE);
@@ -200,20 +207,216 @@ public class VetSys extends JFrame implements ActionListener{
                 name =  JOptionPane.showInputDialog("Enter the Staff's name");
             }
         }
-        this.staff2.add(this.staff);
+
+        this.staffList.add(this.staff);
+
+
 
 
     }
+    //help from restaurant system
     public void viewStaff(){
-        if(this.staff2.size()<1){
-            JOptionPane.showMessageDialog(null,"There are no staff to display","Empty",JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            String output = String.valueOf(staff2.get(0));
-            output += "----------------------";
-            JOptionPane.showMessageDialog(null,output,"Staff List", JOptionPane.INFORMATION_MESSAGE);
+        JComboBox staffCombo = new JComboBox();
+        JTextArea output = new JTextArea();
+        output.setText("Staff Info:\n");
+
+
+        if (this.staffList.size() < 1) {
+            JOptionPane.showMessageDialog((Component)null, "There are no staff in the system", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            Iterator iterator = this.staffList.iterator();
+
+            while(iterator.hasNext()) {
+                staffCombo.addItem(((Staff)iterator.next()).getName() + "\n");
+            }
+
+            JOptionPane.showMessageDialog(null, staffCombo, "Select a member of the staff",JOptionPane.INFORMATION_MESSAGE);
+            int selected = staffCombo.getSelectedIndex();
+            output.append(((Staff)this.staffList.get(selected)).toString());
+            JOptionPane.showMessageDialog(null, output, "Staff Details",JOptionPane.INFORMATION_MESSAGE);
         }
     }
-    public void deleteStaff(){}
+    public void deleteStaff(){
+        JComboBox staffList = new JComboBox();
+        Iterator var2 = this.staffList.iterator();
+
+        if (this.staffList.size() < 1) {
+            JOptionPane.showMessageDialog(null, "There are no staff in the system to Delete", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            while (var2.hasNext()) {
+                Staff s = (Staff) var2.next();
+                staffList.addItem(s.getName());
+            }
+
+            JOptionPane.showMessageDialog( null, staffList, "Delete Staff",JOptionPane.INFORMATION_MESSAGE);
+            int selected = staffList.getSelectedIndex();
+            this.staffList.remove(selected);
+            JOptionPane.showMessageDialog( null, "Deleted Staff Member", "Deleted",JOptionPane.INFORMATION_MESSAGE);
+
+        }
+    }
+
+    public void addClient(){
+        int i;
+        boolean valid = true;
+        String name =  JOptionPane.showInputDialog("Enter the Clients name");
+
+        while(valid){
+
+            for(i=0; i< name.length() && Character.isLetter(name.charAt(i)); i++){
+            }
+            if(i == name.length() && name.length() != 0){
+                String address = JOptionPane.showInputDialog("Enter the Clients address");
+                if(address.length() != 0){
+
+
+                    int j=0;
+                    String phone = JOptionPane.showInputDialog("Enter the Clients phone number");
+
+                    while(j!=1){
+                        try {
+                            Integer.parseInt(phone);
+                            j=1;
+                            valid = false;
+                            this.client = new Client(name, address, phone);
+                            JOptionPane.showMessageDialog(null,"Client created successfully", "Added", JOptionPane.INFORMATION_MESSAGE);
+                        }catch(NumberFormatException e){
+                            JOptionPane.showMessageDialog(null,"Phone number is invalid", "ERROR",JOptionPane.ERROR_MESSAGE);
+                            phone = JOptionPane.showInputDialog("Enter the Clients phone number");
+
+                        }
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null,"Address is invalid", "ERROR",JOptionPane.ERROR_MESSAGE);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null,"Name is invalid", "ERROR",JOptionPane.ERROR_MESSAGE);
+                name =  JOptionPane.showInputDialog("Enter the Clients name");
+            }
+        }
+
+        this.clientList.add(this.client);
+
+
+
+
+
+
+    }
+    public void viewClient(){
+        JComboBox clientCombo = new JComboBox();
+        JTextArea output = new JTextArea();
+        output.setText("Client Info:\n");
+
+
+        if (this.clientList.size() < 1) {
+            JOptionPane.showMessageDialog((Component)null, "There are no clients in the system", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            Iterator iterator = this.clientList.iterator();
+
+            while(iterator.hasNext()) {
+                clientCombo.addItem(((Client)iterator.next()).getName() + "\n");
+            }
+
+            JOptionPane.showMessageDialog(null, clientCombo, "Select a Client",JOptionPane.INFORMATION_MESSAGE);
+            int selected = clientCombo.getSelectedIndex();
+            output.append(((Client)this.clientList.get(selected)).toString());
+            JOptionPane.showMessageDialog(null, output, "Client Details",JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    public void deleteClient(){
+        JComboBox clientList = new JComboBox();
+        Iterator var2 = this.clientList.iterator();
+
+        if (this.clientList.size() < 1) {
+            JOptionPane.showMessageDialog(null, "There are no clients in the system to Delete", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            while (var2.hasNext()) {
+                Client s = (Client) var2.next();
+                clientList.addItem(s.getName());
+            }
+
+            JOptionPane.showMessageDialog( null, clientList, "Delete Client",JOptionPane.INFORMATION_MESSAGE);
+            int selected = clientList.getSelectedIndex();
+            this.clientList.remove(selected);
+            JOptionPane.showMessageDialog( null, "Deleted Client", "Deleted",JOptionPane.INFORMATION_MESSAGE);
+
+        }
+    }
+
+/*
+    public void addPet(){
+        int i;
+        boolean valid = true;
+        String name =  JOptionPane.showInputDialog("Enter the Pets name");
+
+        while(valid){
+
+            for(i=0; i< name.length() && Character.isLetter(name.charAt(i)); i++){
+            }
+            if(i == name.length() && name.length() != 0){
+
+                            //this.client = new Client(name, address, phone);
+                            JOptionPane.showMessageDialog(null,"Pet created successfully", "Added", JOptionPane.INFORMATION_MESSAGE);
+                            valid = false;
+                        }
+
+
+            }else{
+                JOptionPane.showMessageDialog(null,"Name is invalid", "ERROR",JOptionPane.ERROR_MESSAGE);
+                name =  JOptionPane.showInputDialog("Enter the Staff's name");
+            }
+        }
+
+        //this.clientList.add(this.client);
+
+
+
+
+
+
+    }
+    public void viewPet(){
+        JComboBox clientCombo = new JComboBox();
+        JTextArea output = new JTextArea();
+        output.setText("Pet Info:\n");
+
+
+        if (this.clientList.size() < 1) {
+            JOptionPane.showMessageDialog((Component)null, "There are no clients in the system", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            Iterator iterator = this.clientList.iterator();
+
+            while(iterator.hasNext()) {
+                clientCombo.addItem(((Client)iterator.next()).getName() + "\n");
+            }
+
+            JOptionPane.showMessageDialog(null, clientCombo, "Select a Client",JOptionPane.INFORMATION_MESSAGE);
+            int selected = clientCombo.getSelectedIndex();
+            output.append(((Client)this.clientList.get(selected)).toString());
+            JOptionPane.showMessageDialog(null, output, "Client Details",JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    public void deletePet(){
+        JComboBox clientList = new JComboBox();
+        Iterator var2 = this.clientList.iterator();
+
+        if (this.clientList.size() < 1) {
+            JOptionPane.showMessageDialog(null, "There are no clients in the system to Delete", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            while (var2.hasNext()) {
+                Client s = (Client) var2.next();
+                clientList.addItem(s.getName());
+            }
+
+            JOptionPane.showMessageDialog( null, clientList, "Delete Client",JOptionPane.INFORMATION_MESSAGE);
+            int selected = clientList.getSelectedIndex();
+            this.clientList.remove(selected);
+            JOptionPane.showMessageDialog( null, "Deleted Client", "Deleted",JOptionPane.INFORMATION_MESSAGE);
+
+        }
+    }
+    */
 
 
 }
