@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class VetSys extends JFrame implements ActionListener{
 
@@ -10,7 +12,11 @@ public class VetSys extends JFrame implements ActionListener{
         JMenu PetsMenu;
         JLabel response;
         JButton staffButton;
-        JButton buttonC;
+
+
+        ArrayList<Staff> staff2 = new ArrayList();
+        private Staff staff;
+
 
         public VetSys() {
 
@@ -28,6 +34,7 @@ public class VetSys extends JFrame implements ActionListener{
 
 
 
+
             //and add them to the menubar
             JMenuBar menuBar = new JMenuBar();
             this.setJMenuBar(menuBar);
@@ -39,7 +46,7 @@ public class VetSys extends JFrame implements ActionListener{
             //setIconImage(icon.getImage());
 
 
-            this.response = new JLabel("Veterinarian System" );
+            //this.response = new JLabel("Veterinarian System" );
             //add(response);
 
             setSize(400,200);
@@ -49,7 +56,8 @@ public class VetSys extends JFrame implements ActionListener{
 
             this.staffButton = new JButton("Add Staff");
             this.staffButton.addActionListener(this);
-            this.buttonC.add(this.staffButton);
+
+
 
         }
 
@@ -64,11 +72,11 @@ public class VetSys extends JFrame implements ActionListener{
             menuName = e.getActionCommand();
 
             if(e.getActionCommand().equals("Register Staff")){
-                System.out.print("1");
+                this.registerStaff();
             }else if(e.getActionCommand().equals("View Staff")){
-                System.out.print("2");
+                this.viewStaff();
             }else if(e.getActionCommand().equals("Delete Staff")){
-                System.out.print("3");
+               this.deleteStaff();
             }else if(e.getActionCommand().equals("Quit")) {
                 quit = JOptionPane.showConfirmDialog(null,"Are you sure you want to exit?","Exit",JOptionPane.YES_NO_OPTION);
                 if(quit==JOptionPane.YES_OPTION){
@@ -157,9 +165,56 @@ public class VetSys extends JFrame implements ActionListener{
     }
 
     public void registerStaff(){
-            JOptionPane.showMessageDialog(null,"hi","hi",JOptionPane.INFORMATION_MESSAGE);
+        String[] title = new String[]{"Manager", "Cleaner", "Veterinarian", "Receptionist"};
+        int i;
+        boolean valid = true;
+        String name =  JOptionPane.showInputDialog("Enter the Staff's name");
+
+        while(valid){
+
+            for(i=0; i< name.length() && Character.isLetter(name.charAt(i)); i++){
+            }
+            if(i == name.length() && name.length() != 0){
+                String address = JOptionPane.showInputDialog("Enter the Staff's address");
+                if(address.length() != 0){
+                    String position = (String)JOptionPane.showInputDialog((Component)null, "Choose Staff's Position", "Position", 3, (Icon)null, title, title[0]);
+
+                    int j=0;
+                    while(j!=1){
+                       String phone = JOptionPane.showInputDialog("Enter the Staff's phone number");
+                       try {
+                        Integer.parseInt(phone);
+                        j=1;
+                        valid = false;
+                        this.staff = new Staff(name, address,position, phone);
+                        JOptionPane.showMessageDialog(null,"Staff created successfully", "Added", JOptionPane.INFORMATION_MESSAGE);
+                    }catch(NumberFormatException e){
+                        JOptionPane.showMessageDialog(null,"Phone number is invalid", "ERROR",JOptionPane.ERROR_MESSAGE);
+                    }
+                   }
+                }else{
+                    JOptionPane.showMessageDialog(null,"Address is invalid", "ERROR",JOptionPane.ERROR_MESSAGE);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null,"Name is invalid", "ERROR",JOptionPane.ERROR_MESSAGE);
+                name =  JOptionPane.showInputDialog("Enter the Staff's name");
+            }
+        }
+        this.staff2.add(this.staff);
+
 
     }
+    public void viewStaff(){
+        if(this.staff2.size()<1){
+            JOptionPane.showMessageDialog(null,"There are no staff to display","Empty",JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            String output = String.valueOf(staff2.get(0));
+            output += "----------------------";
+            JOptionPane.showMessageDialog(null,output,"Staff List", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    public void deleteStaff(){}
+
 
 }
 

@@ -1,15 +1,14 @@
 public class Staff {
     private String name;
     private String address;
-    private int phone;
-    private String dob;
+    private String phone;
     private String title;
 
-    public Staff(String name, String address, int phone, String dob, String title) {
+    public Staff(String name, String address, String phone, String title) {
         this.name = name;
         this.address = address;
         this.phone = phone;
-        this.dob = dob;
+
         this.title = title;
     }
 
@@ -29,20 +28,12 @@ public class Staff {
         this.address = address;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getDob() {
-        return dob;
-    }
-
-    public void setDob(String dob) {
-        this.dob = dob;
     }
 
     public String getTitle() {
@@ -55,6 +46,6 @@ public class Staff {
 
     @Override
     public String toString() {
-        return String.format("Name: %s\nAddress: %s\nPhone: %s\nDOB: %s\nTitle", this.getName(), this.getAddress(), this.getPhone(), this.getDob(),this.getTitle());
+        return String.format("Name: %s\nAddress: %s\nPhone: %s\nDOB: %s\nTitle", this.getName(), this.getAddress(), this.getPhone(),this.getTitle());
     }
 }
