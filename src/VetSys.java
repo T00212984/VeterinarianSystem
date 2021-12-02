@@ -2,9 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
-import java.util.LinkedList;
 
 public class VetSys extends JFrame implements ActionListener{
 
@@ -21,6 +19,8 @@ public class VetSys extends JFrame implements ActionListener{
         ArrayList<Client> clientList = new ArrayList();
         private Client client;
 
+        ArrayList<Pet> petList = new ArrayList();
+        private Pet pet;
 
         public VetSys() {
 
@@ -29,8 +29,7 @@ public class VetSys extends JFrame implements ActionListener{
 
             setLayout(new GridBagLayout());
 
-            // invoke some user-defined methods to create two menus (and their menu items)
-            // this is done just to make the constructor shorter but is good programming practice
+
 
             this.createStaffMenu();
             this.createClientsMenu();
@@ -39,17 +38,15 @@ public class VetSys extends JFrame implements ActionListener{
 
 
 
-            //and add them to the menubar
+
             JMenuBar menuBar = new JMenuBar();
             this.setJMenuBar(menuBar);
             menuBar.setBackground(Color.gray);
             menuBar.add(this.StaffMenu);
             menuBar.add(this.ClientsMenu);
             menuBar.add(this.PetsMenu);
-           //ImageIcon icon = new ImageIcon("");
+            //ImageIcon icon = new ImageIcon("");
             //setIconImage(icon.getImage());
-
-
             //this.response = new JLabel("Veterinarian System" );
             //add(response);
 
@@ -68,8 +65,6 @@ public class VetSys extends JFrame implements ActionListener{
     public static void main(String[] args) {
             VetSys frame = new VetSys();
         }
-
-        // when a menu-item is clicked, response starts here
         public void actionPerformed(ActionEvent e) {
             int quit;
             String  menuName;
@@ -84,10 +79,9 @@ public class VetSys extends JFrame implements ActionListener{
             }else if(e.getActionCommand().equals("Quit")) {
                 quit = JOptionPane.showConfirmDialog(null,"Are you sure you want to exit?","Exit",JOptionPane.YES_NO_OPTION);
                 if(quit==JOptionPane.YES_OPTION){
-                    JOptionPane.showMessageDialog(null,"Goodbye","Quit",JOptionPane.YES_OPTION);
+                    JOptionPane.showMessageDialog(null,"Goodbye","Quit",JOptionPane.INFORMATION_MESSAGE);
                     System.exit(0);
                 }
-
             }else if(e.getActionCommand().equals("Add Client")){
                 this.addClient();
             }else if(e.getActionCommand().equals("View Clients")) {
@@ -95,7 +89,7 @@ public class VetSys extends JFrame implements ActionListener{
             }else if (e.getActionCommand().equals("Delete Clients")){
                 this.deleteClient();
             }else if(e.getActionCommand().equals("Add Pet")){
-               // this.addPet();
+                this.addPet();
             }else if(e.getActionCommand().equals("View Pets")){
                 //this.viewPet();
             }else if(e.getActionCommand().equals("Delete Pets")) {
@@ -104,8 +98,6 @@ public class VetSys extends JFrame implements ActionListener{
     }
 
 
-
-        //Creates File menu and its menu items
         private void createStaffMenu( ) {
             JMenuItem item;
 
@@ -310,7 +302,7 @@ public class VetSys extends JFrame implements ActionListener{
 
 
         if (this.clientList.size() < 1) {
-            JOptionPane.showMessageDialog((Component)null, "There are no clients in the system", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "There are no clients in the system", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             Iterator iterator = this.clientList.iterator();
 
@@ -344,79 +336,92 @@ public class VetSys extends JFrame implements ActionListener{
         }
     }
 
-/*
+
     public void addPet(){
-        int i;
-        boolean valid = true;
-        String name =  JOptionPane.showInputDialog("Enter the Pets name");
+        if (this.clientList.size() < 1) {
+            JOptionPane.showMessageDialog(null, "There are no clients in the system", "Error", JOptionPane.ERROR_MESSAGE);
+        }else {
+            int i;
+            boolean valid = true;
+            String name = JOptionPane.showInputDialog("Enter the Pets name");
 
-        while(valid){
+            while (valid) {
 
-            for(i=0; i< name.length() && Character.isLetter(name.charAt(i)); i++){
-            }
-            if(i == name.length() && name.length() != 0){
+                for (i = 0; i < name.length() && Character.isLetter(name.charAt(i)); i++) {
+                }
+                if (i == name.length() && name.length() != 0) {
+                    String type = JOptionPane.showInputDialog("Enter the type of pet");
+                    if (type.length() != 0) {
+                        JComboBox clientList = new JComboBox();
+                        Iterator var2 = this.clientList.iterator();
 
-                            //this.client = new Client(name, address, phone);
-                            JOptionPane.showMessageDialog(null,"Pet created successfully", "Added", JOptionPane.INFORMATION_MESSAGE);
-                            valid = false;
+
+                        while (var2.hasNext()) {
+                            Client s = (Client) var2.next();
+                            clientList.addItem(s.getName());
                         }
 
+                        JOptionPane.showMessageDialog(null, clientList, "Pets owner", JOptionPane.INFORMATION_MESSAGE);
+                        int selected = clientList.getSelectedIndex();
+                        String owner = String.valueOf(this.clientList);
 
-            }else{
-                JOptionPane.showMessageDialog(null,"Name is invalid", "ERROR",JOptionPane.ERROR_MESSAGE);
-                name =  JOptionPane.showInputDialog("Enter the Staff's name");
+
+                        valid = false;
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Type is invalid", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Name is invalid", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    name = JOptionPane.showInputDialog("Enter the Pets name");
+                }
             }
         }
+        this.petList.add(this.pet);
+        }
 
-        //this.clientList.add(this.client);
-
-
-
-
-
-
-    }
+/*
     public void viewPet(){
-        JComboBox clientCombo = new JComboBox();
+        JComboBox petCombo = new JComboBox();
         JTextArea output = new JTextArea();
         output.setText("Pet Info:\n");
 
 
-        if (this.clientList.size() < 1) {
-            JOptionPane.showMessageDialog((Component)null, "There are no clients in the system", "Error", JOptionPane.ERROR_MESSAGE);
+        if (this.petList.size() < 1) {
+            JOptionPane.showMessageDialog(null, "There are no pets in the system", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            Iterator iterator = this.clientList.iterator();
+            Iterator iterator = this.petList.iterator();
 
             while(iterator.hasNext()) {
-                clientCombo.addItem(((Client)iterator.next()).getName() + "\n");
+                petCombo.addItem(((Pet)iterator.next()).getName() + "\n");
             }
 
-            JOptionPane.showMessageDialog(null, clientCombo, "Select a Client",JOptionPane.INFORMATION_MESSAGE);
-            int selected = clientCombo.getSelectedIndex();
-            output.append(((Client)this.clientList.get(selected)).toString());
-            JOptionPane.showMessageDialog(null, output, "Client Details",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, petCombo, "Select a Pet",JOptionPane.INFORMATION_MESSAGE);
+            int selected = petCombo.getSelectedIndex();
+            output.append(((Pet)this.petList.get(selected)).toString());
+            JOptionPane.showMessageDialog(null, output, "Pet Details",JOptionPane.INFORMATION_MESSAGE);
         }
     }
-    public void deletePet(){
-        JComboBox clientList = new JComboBox();
-        Iterator var2 = this.clientList.iterator();
 
-        if (this.clientList.size() < 1) {
-            JOptionPane.showMessageDialog(null, "There are no clients in the system to Delete", "Error", JOptionPane.ERROR_MESSAGE);
+    public void deletePet(){
+        JComboBox petList = new JComboBox();
+        Iterator var2 = this.petList.iterator();
+
+        if (this.petList.size() < 1) {
+            JOptionPane.showMessageDialog(null, "There are no pets in the system to Delete", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             while (var2.hasNext()) {
-                Client s = (Client) var2.next();
-                clientList.addItem(s.getName());
+                Pet s = (Pet) var2.next();
+                petList.addItem(s.getName());
             }
 
-            JOptionPane.showMessageDialog( null, clientList, "Delete Client",JOptionPane.INFORMATION_MESSAGE);
-            int selected = clientList.getSelectedIndex();
-            this.clientList.remove(selected);
-            JOptionPane.showMessageDialog( null, "Deleted Client", "Deleted",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog( null, petList, "Delete pet",JOptionPane.INFORMATION_MESSAGE);
+            int selected = petList.getSelectedIndex();
+            this.petList.remove(selected);
+            JOptionPane.showMessageDialog( null, "Deleted pet", "Deleted",JOptionPane.INFORMATION_MESSAGE);
 
         }
     }
-    */
+*/
 
 
 }
