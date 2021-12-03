@@ -206,7 +206,7 @@ public class VetSys extends JFrame implements ActionListener{
 
 
     }
-    //help from restaurant system
+//help from restaurant system for all the code below
     public void viewStaff(){
         JComboBox staffCombo = new JComboBox();
         JTextArea output = new JTextArea();
@@ -378,7 +378,7 @@ public class VetSys extends JFrame implements ActionListener{
         }
         this.petList.add(this.pet);
         }
-
+//this does not work
 /*
     public void viewPet(){
         JComboBox petCombo = new JComboBox();
