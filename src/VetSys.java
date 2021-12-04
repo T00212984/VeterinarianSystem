@@ -3,8 +3,10 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Iterator;
-
+// anything jframe related is taken and modified from the restaurant system in the past projects folder one onedrive
 public class VetSys extends JFrame implements ActionListener{
+
+    //Taken from lab solutions and lab sheets
 
 
         JMenu StaffMenu;
@@ -115,7 +117,7 @@ public class VetSys extends JFrame implements ActionListener{
             item.addActionListener( this );
             this.StaffMenu.add( item );
 
-            this.StaffMenu.addSeparator(); //adds a horizontal separator line
+            this.StaffMenu.addSeparator();
 
             item = new JMenuItem("Quit");
             item.addActionListener( this );
@@ -161,6 +163,7 @@ public class VetSys extends JFrame implements ActionListener{
     }
 
     public void registerStaff(){
+        //code taken and modified from restaurant system
         String[] title = new String[]{"Manager", "Cleaner", "Veterinarian", "Receptionist"};
         int i;
         boolean valid = true;
@@ -179,6 +182,7 @@ public class VetSys extends JFrame implements ActionListener{
                     String phone = JOptionPane.showInputDialog("Enter the Staff's phone number");
 
                     while(j!=1){
+
                        try {
                         Integer.parseInt(phone);
                         j=1;
@@ -206,8 +210,9 @@ public class VetSys extends JFrame implements ActionListener{
 
 
     }
-//help from restaurant system for all the code below
     public void viewStaff(){
+        //code taken and modified from restaurant system
+
         JComboBox staffCombo = new JComboBox();
         JTextArea output = new JTextArea();
         output.setText("Staff Info:\n");
@@ -228,7 +233,10 @@ public class VetSys extends JFrame implements ActionListener{
             JOptionPane.showMessageDialog(null, output, "Staff Details",JOptionPane.INFORMATION_MESSAGE);
         }
     }
+
     public void deleteStaff(){
+        //code taken and modified from restaurant system
+
         JComboBox staffList = new JComboBox();
         Iterator var2 = this.staffList.iterator();
 
@@ -249,6 +257,8 @@ public class VetSys extends JFrame implements ActionListener{
     }
 
     public void addClient(){
+        //code taken and modified from restaurant system
+
         int i;
         boolean valid = true;
         String name =  JOptionPane.showInputDialog("Enter the Clients name");
@@ -295,7 +305,10 @@ public class VetSys extends JFrame implements ActionListener{
 
 
     }
+
     public void viewClient(){
+        //code taken and modified from restaurant system
+
         JComboBox clientCombo = new JComboBox();
         JTextArea output = new JTextArea();
         output.setText("Client Info:\n");
@@ -316,7 +329,10 @@ public class VetSys extends JFrame implements ActionListener{
             JOptionPane.showMessageDialog(null, output, "Client Details",JOptionPane.INFORMATION_MESSAGE);
         }
     }
+
     public void deleteClient(){
+        //code taken and modified from restaurant system
+
         JComboBox clientList = new JComboBox();
         Iterator var2 = this.clientList.iterator();
 
@@ -338,6 +354,7 @@ public class VetSys extends JFrame implements ActionListener{
 
 
     public void addPet(){
+        //code taken and modified from restaurant system
         if (this.clientList.size() < 1) {
             JOptionPane.showMessageDialog(null, "There are no clients in the system", "Error", JOptionPane.ERROR_MESSAGE);
         }else {
@@ -378,7 +395,10 @@ public class VetSys extends JFrame implements ActionListener{
         }
         this.petList.add(this.pet);
         }
+
+
 //this does not work
+    //code taken and modified from restaurant system
 /*
     public void viewPet(){
         JComboBox petCombo = new JComboBox();
