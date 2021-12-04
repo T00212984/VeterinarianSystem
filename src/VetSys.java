@@ -47,10 +47,7 @@ public class VetSys extends JFrame implements ActionListener{
             menuBar.add(this.StaffMenu);
             menuBar.add(this.ClientsMenu);
             menuBar.add(this.PetsMenu);
-            //ImageIcon icon = new ImageIcon("");
-            //setIconImage(icon.getImage());
-            //this.response = new JLabel("Veterinarian System" );
-            //add(response);
+
 
             setSize(400,200);
             setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -234,8 +231,9 @@ public class VetSys extends JFrame implements ActionListener{
         }
     }
 
+
+//code taken and modified from restaurant system
     public void deleteStaff(){
-        //code taken and modified from restaurant system
 
         JComboBox staffList = new JComboBox();
         Iterator var2 = this.staffList.iterator();
@@ -255,9 +253,11 @@ public class VetSys extends JFrame implements ActionListener{
 
         }
     }
+//End
 
+//code taken and modified from restaurant system
     public void addClient(){
-        //code taken and modified from restaurant system
+
 
         int i;
         boolean valid = true;
@@ -300,15 +300,10 @@ public class VetSys extends JFrame implements ActionListener{
         this.clientList.add(this.client);
 
 
-
-
-
-
     }
-
+//End
+//code taken and modified from restaurant system
     public void viewClient(){
-        //code taken and modified from restaurant system
-
         JComboBox clientCombo = new JComboBox();
         JTextArea output = new JTextArea();
         output.setText("Client Info:\n");
@@ -329,10 +324,10 @@ public class VetSys extends JFrame implements ActionListener{
             JOptionPane.showMessageDialog(null, output, "Client Details",JOptionPane.INFORMATION_MESSAGE);
         }
     }
+//End
 
+//code taken and modified from restaurant system
     public void deleteClient(){
-        //code taken and modified from restaurant system
-
         JComboBox clientList = new JComboBox();
         Iterator var2 = this.clientList.iterator();
 
@@ -351,10 +346,12 @@ public class VetSys extends JFrame implements ActionListener{
 
         }
     }
+//End
 
 
+//code taken and modified from restaurant system
     public void addPet(){
-        //code taken and modified from restaurant system
+
         if (this.clientList.size() < 1) {
             JOptionPane.showMessageDialog(null, "There are no clients in the system", "Error", JOptionPane.ERROR_MESSAGE);
         }else {
@@ -395,7 +392,7 @@ public class VetSys extends JFrame implements ActionListener{
         }
         this.petList.add(this.pet);
         }
-
+//End
 
 //this does not work
     //code taken and modified from restaurant system
@@ -442,7 +439,7 @@ public class VetSys extends JFrame implements ActionListener{
         }
     }
 */
-
+//End
 
 }
 
